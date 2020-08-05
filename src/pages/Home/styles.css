@@ -1,0 +1,37 @@
+#page-home {
+    height: 80vh;
+    background: url('../../assets/img/drive.svg') no-repeat 520px center;
+}
+
+main {
+    display: flex;
+    margin-left: 50px;
+    width: 40%;
+    height: 80%;
+    justify-content: center;
+    flex-direction: column;
+}
+
+main h1 {
+    align-items: center;
+    font-size: 56px;
+}
+
+main a {
+    display: flex;
+    width: 200px;
+    height: 56px;
+    border-radius: 10px;
+    color: var(--white);
+    border: var(--white);
+    background-color: var(--red);
+    transition: opacity .3s;
+    align-items: center;
+    justify-content: center;
+}
+
+main a:hover,
+    a:focus {
+  color: var(--white);      
+  opacity: .6;
+}

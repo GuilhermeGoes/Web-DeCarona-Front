@@ -1,0 +1,33 @@
+#cabecalho {
+    display: flex;
+    flex-direction: row;
+    max-width: 50%;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+#cabecalho h2 {
+    margin-left: 16px;
+}
+
+.btn-add{
+    color: var(--white); ;
+    border: var(--white); ;
+    background-color: var(--red);
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    margin: 8px 16px;
+    transition: opacity .3s;
+}
+.btn-add:hover,
+.btn-add:focus {
+  opacity: .6;
+  color: var(--white); 
+}
+
+@media (max-width: 640px) {
+    #cabecalho{
+        max-width: 100%;
+    }
+}

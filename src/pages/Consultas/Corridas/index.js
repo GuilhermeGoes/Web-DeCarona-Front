@@ -1,29 +1,76 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Table from 'react-bootstrap/Table';
 
+import api from '../../../services/api';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
-import QueryTable from '../../../components/QueryTable';
 
 import '../styles.css';
 
-const TableCorridas = () => {
-    return (
-        <div>
-            <Header />
+class TableCorridas extends Component {
+    constructor (props) {
+        super(props)
+
+        this.state = {
+            corridas: []
+        }
+    }
+
+    componentDidMount() {
+        api.get('corridas')
+            .then(response => {
+                console.log(response)
+                this.setState({ corridas: response.data })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    render() {
+        const { corridas } = this.state
+
+        return (
             <div>
-                <div id="cabecalho">
-                    <h2>Corridas</h2>
-                    <Link className="btn-add" to="/cadastro-corridas">
-                        + Nova corrida
+                <Header />
+                <div>
+                    <div id="cabecalho">
+                        <h2>Corridas</h2>
+                        <Link className="btn-add" to="/cadastro-corridas">
+                            + Nova corrida
                     </Link>
+                    </div>
+
+                    <div id="table-page">
+                        <Table striped hover id="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Motorista</th>
+                                    <th>Passageiro</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {corridas.map(corrida => {
+                                    return (
+                                        <tr>
+                                            <td>{corrida.id}</td>
+                                            <td>{corrida.motorista}</td>
+                                            <td>{corrida.passageiro}</td>
+                                            <td>{corrida.valor}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </Table>
+                    </div>
                 </div>
-                
-                <QueryTable />
+                <Footer />
             </div>
-            <Footer />
-        </div>
-    )
+        )
+    }
 }
 
 export default TableCorridas;

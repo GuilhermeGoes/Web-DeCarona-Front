@@ -8,6 +8,7 @@ import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 
 import '../styles.css';
+import './motoristas.css';
 
 class TableMotoristas extends Component {
     constructor(props) {
@@ -57,7 +58,7 @@ class TableMotoristas extends Component {
         return (
             <div>
                 <Header />
-                <div>
+                <div className="content">
                     <div id="cabecalho">
                         <h2>Motoristas</h2>
                         <Link className="btn-add" to="/cadastro-motoristas">
@@ -94,6 +95,7 @@ class TableMotoristas extends Component {
                                             <td>
                                                 <Form.Control 
                                                     as="select"
+                                                    className="select-status"
                                                     name="statusMotorista"
                                                     key={motorista.id}  
                                                     onChange={this.handleChange}>

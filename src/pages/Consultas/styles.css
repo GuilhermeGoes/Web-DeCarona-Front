@@ -39,6 +39,7 @@
     justify-content: center;
     flex-direction: row;
     margin-top: 8px;
+    overflow: auto;
 }
 
 #table {

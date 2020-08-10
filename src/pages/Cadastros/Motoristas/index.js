@@ -22,12 +22,11 @@ class CadMotoristas extends Component {
     }
 
     changeHandler = event => {
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({ [event.target.name]: event.target.value })
     }
 
     submitHandler = event => {
         event.preventDefault()
-        console.log(this.state)
         api.post('motoristas', this.state)
             .then(response => {
               console.log(response)  
@@ -35,6 +34,10 @@ class CadMotoristas extends Component {
             .catch(error => {
                 console.log(error)
             })
+
+        alert('Motorista adicionado com sucesso!')
+        this.props.history.push('/table-motoristas')
+        window.location.reload(false);
     }
 
     render() {

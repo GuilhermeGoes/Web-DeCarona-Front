@@ -7,7 +7,6 @@ import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 
 import '../styles.css';
-
 class TableCorridas extends Component {
     constructor (props) {
         super(props)
@@ -15,6 +14,10 @@ class TableCorridas extends Component {
         this.state = {
             corridas: []
         }
+    }
+
+    refreshPage() {
+        window.location.reload(false);
     }
 
     componentDidMount() {
@@ -57,8 +60,8 @@ class TableCorridas extends Component {
                                     return (
                                         <tr>
                                             <td>{corrida.id}</td>
-                                            <td>{corrida.motorista}</td>
-                                            <td>{corrida.passageiro}</td>
+                                            <td>{corrida.nome_motorista}</td>
+                                            <td>{corrida.nome_passageiro}</td>
                                             <td>{corrida.valor}</td>
                                         </tr>
                                     )

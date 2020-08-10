@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
-import Table from 'react-bootstrap/Table';
+import { Table, Form } from 'react-bootstrap';
 
 import api from '../../../services/api';
 import Header from '../../../components/Header';
@@ -14,7 +14,11 @@ class TableMotoristas extends Component {
         super(props)
 
         this.state = {
-            motoristas: []
+            motoristas: [],
+            statusMotorista: {
+                id: '',
+                status: ''
+            }
         }
     }
 
@@ -27,6 +31,24 @@ class TableMotoristas extends Component {
             .catch(error => {
                 console.log(error)
             })
+    }
+
+    handleChange = event => {
+        let obj = JSON.parse(event.target.value)
+        this.setState({ [event.target.name]: obj })
+        
+        console.log(this.state.statusMotorista.status)
+    }
+
+    updateStatus = event => {
+        api.put(`motoristas/${this.state.statusMotorista.id}`, 
+                { status: this.state.statusMotorista.status})
+            .then(response => {
+                console.log(response)  
+            })
+            .catch(error => {
+              console.log(error)
+          })
     }
 
     render() {
@@ -59,7 +81,7 @@ class TableMotoristas extends Component {
                             <tbody>
                                 {motoristas.map(motorista => {
                                     return (
-                                        <tr>
+                                        <tr onClick={this.updateStatus}>
                                             <td>{motorista.id}</td>
                                             <td>{motorista.nome}</td>
                                             <td>
@@ -69,7 +91,17 @@ class TableMotoristas extends Component {
                                             </td>
                                             <td>{motorista.cpf}</td>
                                             <td>{motorista.modeloCarro}</td>
-                                            <td>{motorista.status}</td>
+                                            <td>
+                                                <Form.Control 
+                                                    as="select"
+                                                    name="statusMotorista"
+                                                    key={motorista.id}  
+                                                    onChange={this.handleChange}>
+                                                    <option value={JSON.stringify({id: motorista.id, status: motorista.status})}>{motorista.status}</option>
+                                                    <option value={JSON.stringify({id: motorista.id, status: 'Ativo'})}>Ativo</option>
+                                                    <option value={JSON.stringify({id: motorista.id, status: 'Inativo'})}>Inativo</option>
+                                                </Form.Control>
+                                            </td>
                                             <td>{motorista.sexo}</td>
                                         </tr>
                                     )

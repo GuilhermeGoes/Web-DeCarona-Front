@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form, Col } from 'react-bootstrap';
-import api from '../../../services/api';
 
+import api from '../../../services/api';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 
 import '../styles.css';
+
+const history = useHistory;
 
 class CadPassageiros extends Component {
     constructor(props) {
@@ -33,7 +36,11 @@ class CadPassageiros extends Component {
             .catch(error => {
                 console.log(error)
             })
-        }
+        
+        alert('Passageiro adicionado com sucesso!')
+        this.props.history.push('/table-passageiros')
+        window.location.reload(false);
+    }
 
     render() {
         const { nome, nascimento, cpf, sexo} = this.state

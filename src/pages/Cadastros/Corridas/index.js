@@ -14,12 +14,14 @@ class CadCorridas extends Component {
         this.state = {
             id_motorista: '',
             id_passageiro: '',
-            valor: ''
+            valor: '',
+            motoristas: [],
+            passageiros: []
         }
     }
 
     changeHandler = event => {
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({ [event.target.name]: event.target.value })
     }
 
     submitHandler = event => {
@@ -27,15 +29,39 @@ class CadCorridas extends Component {
         console.log(this.state)
         api.post('corridas', this.state)
             .then(response => {
-              console.log(response)  
+                console.log(response)
             })
             .catch(error => {
                 console.log(error)
             })
-        }
-    
+
+        alert('Corrida adicionada com sucesso!')
+        this.props.history.push('/table-corridas')
+        window.location.reload(false);
+    }
+
+    componentDidMount() {
+        api.get('motoristas')
+            .then(response => {
+                console.log(response)
+                this.setState({ motoristas: response.data })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+        api.get('passageiros')
+            .then(response => {
+                console.log(response)
+                this.setState({ passageiros: response.data })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
     render() {
-        const { id_motorista, id_passageiro, valor } = this.state
+        const { valor, motoristas, passageiros } = this.state
         return (
             <div>
                 <Header />
@@ -46,21 +72,41 @@ class CadCorridas extends Component {
                             <Form.Group>
                                 <Form.Label>Motorista</Form.Label>
                                 <Form.Control
-                                    type="text"
+                                    as='select'
                                     name="id_motorista"
-                                    value={id_motorista}
                                     onChange={this.changeHandler}
-                                    required />
+                                    required>
+                                    <option></option>
+                                    {motoristas.filter(motorista => motorista.status === 'Ativo').map(fMotorista => {
+                                        return (
+                                            <option 
+                                                key={fMotorista.id}
+                                                value={fMotorista.id}>
+                                                    {fMotorista.nome}
+                                            </option>
+                                        )
+                                    })}
+                                </Form.Control>
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label>Passageiro</Form.Label>
                                 <Form.Control
-                                    type="text"
+                                    as='select'
                                     name="id_passageiro"
-                                    value={id_passageiro}
                                     onChange={this.changeHandler}
-                                    required />
+                                    required>
+                                    <option></option>
+                                    {passageiros.map(passageiro => {
+                                        return (
+                                            <option 
+                                                key={passageiro.id}
+                                                value={passageiro.id}>
+                                                    {passageiro.nome}
+                                            </option>
+                                        )
+                                    })}
+                                </Form.Control>
                             </Form.Group>
 
                             <Form.Group>
